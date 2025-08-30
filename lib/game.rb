@@ -39,7 +39,7 @@ class Game
       else
         play_round_hum #computer sets code, human guesses
       end
-      break unless play_again?
+      break
     end
   end
   
@@ -58,9 +58,11 @@ class Game
     result
   end
   def play_round_hum
-    loop do
-      print "Enter 4 colors from the list with commas separating
-             Purple, Blue, Green, Pink, Black, Grey\n Guess: "
+    i = 0
+    print "Enter 4 colors from the list with commas separating
+    Purple, Blue, Green, Pink, Black, Grey\n Guess: "
+    while i < 12 do
+      i += 1
       input = gets.chomp
       guess = input.split(",").map(&:strip)
       @hum_guess = guess
@@ -71,18 +73,25 @@ class Game
       else
         puts "Try again"
       end
+      if i == 12
+        puts "Game Over! You lose"
+        break
+      end
     end
   end
 
   #computer is guessing colors
   def play_round_comp
-    loop do
-      print "Enter your secret code (4 colors, comma-separated)
+  
+  print "Enter your secret code (4 colors, comma-separated)
   Choose from  purple, blue, green, pink, black, grey
   Your code: "
       input = gets.chomp
       secret = input.split(",").map(&:strip)
+      i = 0
+    while i < 12 do
 
+      i += 1
       comp = Comp.new
       guess = comp.comp_guess
       feedback = secret.zip(guess).map do |actual, guess_color|
@@ -96,13 +105,17 @@ class Game
       end
       p guess
       p feedback
-
+      if i == 12
+        puts "Game over, you win!"
+        break
+      end
       if feedback.all? { |peg| peg == "red" }
         puts "Computer guessed correctly"
         break
       else
         puts "Computer will try again"
       end
+
     end
   end
 end
