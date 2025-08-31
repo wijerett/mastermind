@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require_relative 'human'
 require_relative 'computer'
 require_relative 'items'
